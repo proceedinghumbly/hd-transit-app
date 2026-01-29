@@ -49,16 +49,17 @@ export default function Bodygraph({ transits }: BodygraphProps) {
   }, [transits]);
 
   return (
-    <div 
-      ref={svgRef}
-      className="w-full h-full flex items-center justify-center overflow-hidden"
-      dangerouslySetInnerHTML={{ __html: svgContent }}
-      style={{
-        filter: 'drop-shadow(0 0 20px rgba(212, 175, 55, 0.2))',
-        maxWidth: '500px',
-        maxHeight: '700px',
-        margin: '0 auto'
-      }}
-    />
+    <div className="w-full h-full flex items-center justify-center overflow-hidden">
+      <div 
+        ref={svgRef}
+        className="flex items-center justify-center"
+        dangerouslySetInnerHTML={{ __html: svgContent }}
+        style={{
+          filter: 'drop-shadow(0 0 20px rgba(212, 175, 55, 0.2))',
+          maxWidth: '500px',
+          maxHeight: '700px'
+        }}
+      />
+    </div>
   );
 }
