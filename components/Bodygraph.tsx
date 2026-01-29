@@ -37,6 +37,12 @@ export default function Bodygraph({ transits }: BodygraphProps) {
         // Make stroke visible (gold color)
         modifiedSvg = modifiedSvg.replace(/stroke="transparent"/g, 'stroke="#555"');
         
+        // Add proper sizing attributes to the SVG tag
+        modifiedSvg = modifiedSvg.replace(
+          /<svg/,
+          '<svg style="width: 100%; height: 100%; max-width: 450px; max-height: 650px; margin: 0 auto;"'
+        );
+        
         // Update the SVG
         setSvgContent(modifiedSvg);
       });
@@ -45,10 +51,13 @@ export default function Bodygraph({ transits }: BodygraphProps) {
   return (
     <div 
       ref={svgRef}
-      className="w-full h-full flex items-center justify-center"
+      className="w-full h-full flex items-center justify-center overflow-hidden"
       dangerouslySetInnerHTML={{ __html: svgContent }}
       style={{
-        filter: 'drop-shadow(0 0 20px rgba(212, 175, 55, 0.2))'
+        filter: 'drop-shadow(0 0 20px rgba(212, 175, 55, 0.2))',
+        maxWidth: '500px',
+        maxHeight: '700px',
+        margin: '0 auto'
       }}
     />
   );

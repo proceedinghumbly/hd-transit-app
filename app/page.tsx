@@ -152,8 +152,8 @@ export default function Home() {
         </aside>
 
         {/* Center - Bodygraph */}
-        <main className="flex-1 flex flex-col items-center justify-center p-4 overflow-hidden">
-          <div className="text-center mb-2">
+        <main className="flex-1 flex flex-col items-center justify-center p-2 overflow-hidden">
+          <div className="text-center mb-1">
             <h2 className="text-lg font-bold text-[#d4af37]">Transit Chart</h2>
             <p className="text-gray-400 text-xs">
               {timelineOffset === 0 ? 'Now' : 
@@ -170,7 +170,8 @@ export default function Home() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.3 }}
-                className="w-full h-full max-w-xl max-h-[70vh] flex items-center justify-center"
+                className="w-full flex-1 flex items-center justify-center overflow-hidden"
+                style={{ maxHeight: 'calc(100vh - 180px)' }}
               >
                 <Bodygraph transits={transits} />
               </motion.div>
