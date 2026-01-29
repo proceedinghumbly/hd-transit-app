@@ -34,6 +34,7 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [timelineOffset, setTimelineOffset] = useState(0);
+  const [timelineRange, setTimelineRange] = useState(168); // hours (7 days default)
   const [activeTab, setActiveTab] = useState<'transit' | 'about'>('transit');
 
   const fetchTransits = async (date: Date) => {
@@ -110,12 +111,20 @@ export default function Home() {
               {format(selectedDate, 'MMM d, yyyy • h:mm a')}
             </div>
           </div>
-          <button
-            onClick={() => { setTimelineOffset(0); fetchTransits(new Date()); }}
-            className="px-3 py-1 bg-[#d4af37] text-black rounded text-sm font-medium hover:bg-[#c4a037] transition-colors"
-          >
-            Now
-          </button>
+          <div className="flex items-center gap-3">
+            <a
+              href="/ephemeris"
+              className="px-3 py-1 bg-gray-800 text-gray-300 rounded text-sm font-medium hover:bg-gray-700 transition-colors"
+            >
+              Ephemeris
+            </a>
+            <button
+              onClick={() => { setTimelineOffset(0); fetchTransits(new Date()); }}
+              className="px-3 py-1 bg-[#d4af37] text-black rounded text-sm font-medium hover:bg-[#c4a037] transition-colors"
+            >
+              Now
+            </button>
+          </div>
         </div>
       </header>
 
@@ -283,6 +292,35 @@ export default function Home() {
       {/* Bottom Timeline - Fixed */}
       <footer className="border-t border-gray-800 bg-[#1a1a1a] px-6 py-2.5 flex-shrink-0">
         <div className="max-w-[1800px] mx-auto">
+          {/* Range Selector */}
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <span className="text-xs text-gray-500">Range:</span>
+            <button
+              onClick={() => { setTimelineRange(168); setTimelineOffset(0); }}
+              className={`px-2 py-0.5 text-xs rounded ${timelineRange === 168 ? 'bg-[#d4af37] text-black' : 'bg-gray-800 text-gray-400 hover:bg-gray-700'}`}
+            >
+              ±7d
+            </button>
+            <button
+              onClick={() => { setTimelineRange(720); setTimelineOffset(0); }}
+              className={`px-2 py-0.5 text-xs rounded ${timelineRange === 720 ? 'bg-[#d4af37] text-black' : 'bg-gray-800 text-gray-400 hover:bg-gray-700'}`}
+            >
+              ±30d
+            </button>
+            <button
+              onClick={() => { setTimelineRange(2160); setTimelineOffset(0); }}
+              className={`px-2 py-0.5 text-xs rounded ${timelineRange === 2160 ? 'bg-[#d4af37] text-black' : 'bg-gray-800 text-gray-400 hover:bg-gray-700'}`}
+            >
+              ±90d
+            </button>
+            <button
+              onClick={() => { setTimelineRange(4320); setTimelineOffset(0); }}
+              className={`px-2 py-0.5 text-xs rounded ${timelineRange === 4320 ? 'bg-[#d4af37] text-black' : 'bg-gray-800 text-gray-400 hover:bg-gray-700'}`}
+            >
+              ±180d
+            </button>
+          </div>
+
           <div className="flex items-center gap-3">
             <span className="text-xs text-gray-400 w-24">
               {timelineOffset < 0 ? `${Math.abs(timelineOffset)}h ago` : 
@@ -293,13 +331,13 @@ export default function Home() {
             <div className="flex-1">
               <input
                 type="range"
-                min="-168"
-                max="168"
+                min={-timelineRange}
+                max={timelineRange}
                 value={timelineOffset}
                 onChange={(e) => handleTimelineChange(parseInt(e.target.value))}
                 className="w-full h-1.5 rounded-lg appearance-none cursor-pointer bg-gray-700"
                 style={{
-                  background: `linear-gradient(to right, #d4af37 0%, #d4af37 ${((timelineOffset + 168) / 336) * 100}%, #374151 ${((timelineOffset + 168) / 336) * 100}%, #374151 100%)`
+                  background: `linear-gradient(to right, #d4af37 0%, #d4af37 ${((timelineOffset + timelineRange) / (timelineRange * 2)) * 100}%, #374151 ${((timelineOffset + timelineRange) / (timelineRange * 2)) * 100}%, #374151 100%)`
                 }}
               />
             </div>
@@ -312,8 +350,8 @@ export default function Home() {
             />
           </div>
           <div className="flex justify-between mt-1 text-xs text-gray-600">
-            <span>-7d</span>
-            <span>+7d</span>
+            <span>-{timelineRange / 24}d</span>
+            <span>+{timelineRange / 24}d</span>
           </div>
         </div>
       </footer>
