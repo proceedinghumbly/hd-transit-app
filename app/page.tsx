@@ -123,7 +123,7 @@ export default function Home() {
       <div className="flex-1 flex overflow-hidden">
         
         {/* Left Sidebar - Transit List */}
-        <aside className="w-48 border-r border-gray-800 bg-[#1a1a1a] p-3 overflow-y-auto flex-shrink-0">
+        <aside className="w-52 border-r border-gray-800 bg-[#1a1a1a] p-3 overflow-y-auto flex-shrink-0">
           <h2 className="text-[#d4af37] font-bold text-sm mb-3">Transits</h2>
           
           {transits && (
@@ -135,15 +135,20 @@ export default function Home() {
                 return (
                   <div
                     key={planet}
-                    className="flex items-center justify-between py-1.5 border-b border-gray-800 text-xs"
+                    className="py-1.5 border-b border-gray-800"
                   >
-                    <div className="flex items-center gap-1.5">
-                      <span className="text-[#d4af37] text-base w-5">{symbol}</span>
-                      <span className="text-gray-400 capitalize text-xs">{planet}</span>
+                    <div className="flex items-center justify-between mb-0.5">
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-[#d4af37] text-base w-5">{symbol}</span>
+                        <span className="text-gray-400 capitalize text-xs">{planet}</span>
+                      </div>
+                      <span className="text-[#d4af37] font-bold text-xs">
+                        {activation.gate}.{activation.line}
+                      </span>
                     </div>
-                    <span className="text-[#d4af37] font-bold text-xs">
-                      {activation.gate}.{activation.line}
-                    </span>
+                    <div className="text-xs text-gray-500 ml-6">
+                      C:{activation.color} T:{activation.tone} B:{activation.base}
+                    </div>
                   </div>
                 );
               })}
@@ -153,7 +158,7 @@ export default function Home() {
 
         {/* Center - Bodygraph */}
         <main className="flex-1 flex flex-col items-center justify-center p-2 overflow-hidden">
-          <div className="text-center mb-1">
+          <div className="w-full text-center mb-1 flex flex-col items-center">
             <h2 className="text-lg font-bold text-[#d4af37]">Transit Chart</h2>
             <p className="text-gray-400 text-xs">
               {timelineOffset === 0 ? 'Now' : 
